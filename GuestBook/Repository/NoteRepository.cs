@@ -16,25 +16,25 @@ namespace GuestBook.Repository
         {
             _db = db;
         }
-        public IEnumerable<Note> GetNotes()
+        public async Task<IEnumerable<Note>> GetNotesAsync()
         {
-            return _db.Notes.ToList();
+            return await _db.Notes.ToListAsync();
         }
 
        
 
-        public Note InsertNote(Note note)
+        public async Task<Note> InsertNoteAsync(Note note)
         {
             note.Id = Guid.NewGuid();
             note.CreatingDateTime = DateTime.Now;
-            _db.Notes.Add(note);
-            Save();
+            await _db.Notes.AddAsync(note);
+            await SaveAsync();
             return note;
         }
 
-        public bool Save()
+        public async Task<bool> SaveAsync()
         {
-            var saved = _db.SaveChanges();
+            var saved = await _db.SaveChangesAsync();
             return saved > 0;
         }
 

@@ -26,13 +26,13 @@ namespace GuestBook.Controllers
 
         [HttpGet(Notes.GetAll)]
         [ProducesResponseType(200, Type = typeof(NoteResponse[]))]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(_noteRepository.GetNotes());
+            return Ok(await _noteRepository.GetNotesAsync());
         }
         
         [HttpPost(Notes.Create)]
-        public IActionResult Add([FromBody] CreateNoteRequest request)
+        public async Task<IActionResult> Add([FromBody] CreateNoteRequest request)
         {
             Note note = new Note()
             {
@@ -40,7 +40,7 @@ namespace GuestBook.Controllers
                 Email = request.Email,
                 Name = request.Name,
             };
-            return Ok(_noteRepository.InsertNote(note));
+            return Ok(await _noteRepository.InsertNoteAsync(note));
         }
         
     }

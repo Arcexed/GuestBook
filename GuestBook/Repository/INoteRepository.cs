@@ -9,9 +9,9 @@ namespace GuestBook.Repository
 {
     public interface INoteRepository
     {
-        IEnumerable<Note> GetNotes();
-        Note InsertNote(Note note);
-        bool Save();
+        Task<IEnumerable<Note>> GetNotesAsync();
+        Task<Note> InsertNoteAsync(Note note);
+        Task<bool> SaveAsync();
         
     }
 }
