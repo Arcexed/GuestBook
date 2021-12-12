@@ -28,7 +28,21 @@ namespace GuestBook.Controllers
         [ProducesResponseType(200, Type = typeof(NoteResponse[]))]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _noteRepository.GetNotesAsync());
+            List<NoteResponse> noteResponses = new List<NoteResponse>();
+            var notes = await _noteRepository.GetNotesAsync();
+            foreach (var note in notes)
+            {
+                NoteResponse noteResponse = new NoteResponse()
+                {
+                    Id = note.Id,
+                    Email = note.Email,
+                    Name = note.Email,
+                    Text = note.Text,
+                    CreatingDateTime = note.CreatingDateTime,
+                };
+                noteResponses.Add(noteResponse);
+            }
+            return Ok(noteResponses);
         }
         
         [HttpPost(Notes.Create)]
